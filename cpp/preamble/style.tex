@@ -1,0 +1,190 @@
+% Custom style for LaTeX document, Alexis GRACIAS, 2026 
+
+% Sections style
+\mtcsetfont{minitoc}{section}{\normalsize\bfseries}
+\mtcsetfont{minitoc}{subsection}{\small\itshape}
+\mtcsetrules{minitoc}{off}
+\mtcsetoffset{minitoc}{10pt}
+
+% Custom colors
+\definecolor{ao}{rgb}{0.0, 0.0, 1.0}
+\definecolor{coolblack}{rgb}{0.0, 0.18, 0.39}
+\definecolor{cyan}{rgb}{0.0, 1.0, 1.0}
+\definecolor{glaucous}{rgb}{0.38, 0.51, 0.71}
+\definecolor{electricultramarine}{rgb}{0.25, 0.0, 1.0}
+\definecolor{gray75}{gray}{0.75}
+\definecolor{bg}{gray}{0.95}
+\definecolor{electricultramarine}{rgb}{0.25, 0.0, 1.0}
+
+% Custom boxes
+
+% Skimpybox
+\newtcolorbox{skimpybox}[1]{
+    enhanced,
+    breakable,
+    colback=white,
+    colframe=gray!75!black,
+    fonttitle=\bfseries\ttfamily,
+    coltitle=white,
+    title={#1},
+    arc=3pt,
+    boxrule=0.5pt,
+    fontupper=\small\ttfamily
+}
+
+% Terminalbox (Style Pro / Sobre)
+\newtcolorbox{terminalbox}[1]{
+    enhanced,
+    frame hidden,
+    sharp corners,
+    boxrule=0pt,
+    borderline left={2pt}{0pt}{gray!80},
+    colback=gray!5,                      
+    fontupper=\small\sffamily,
+    size=small,
+    before skip=10pt,
+    after skip=10pt,
+    title={#1},
+    fonttitle=\bfseries\sffamily,
+    coltitle=black,
+    attach title to upper,
+    after title={\medskip\par}
+}
+
+% Mintedbox
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+  breakable=true,
+  listing engine=minted,
+  listing only,
+  minted language=#2,
+  minted style=default,
+  minted options={
+    linenos,
+    gobble=0,
+    breaklines=true,
+    breakafter=,,
+    fontsize=\small,
+    numbersep=8pt,
+    #1},
+  boxsep=0pt,
+  left skip=0pt,
+  right skip=0pt,
+  left=25pt,
+  right=0pt,
+  top=3pt,
+  bottom=3pt,
+  arc=5pt,
+  leftrule=0pt,
+  rightrule=0pt,
+  bottomrule=2pt,
+  toprule=2pt,
+  colback=bg,
+  colframe=gray!70,
+  enhanced,
+  overlay={
+    \begin{tcbclipinterior}
+    \fill[gray!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+    \end{tcbclipinterior}},
+  #3}
+
+% Chapter's title style
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+
+% Table of contents style
+\makeatletter
+\renewcommand*{\l@chapter}[2]{%         % Chapter label format
+  \ifnum \c@tocdepth > \m@ne            % Check: Maximum depth > -1
+    \addpenalty{-\@highpenalty}%        % Encourage prior line breaking
+    \vskip 1.0em \@plus\p@%             % Prior vertical whitespace
+    \setlength\@tempdima{1.5em}%        % Set temporary length
+    \begingroup                         % Begin closed group
+      \parindent\z@                     % No paragraph indentation
+      \rightskip\@tocrmarg              % Reserved right whitespace
+      \parfillskip -\@tocrmarg          % Prevent box from moving
+      \leavevmode                       % Force horizontal mode
+      \advance\leftskip\@tempdima       % Left whitespace
+      \hskip -\leftskip                 % First line alignment
+      {\bfseries #1}%                   % Chapter name and format
+      \nobreak                          % Avoid lineskip
+      \leaders\hbox{$%                  % Command to replicate dots
+        \m@th                           % Math mode for alignment
+        \mkern\@dotsep mu               % Whitespace before a dot
+        \hbox{.}%                       % Dot separator
+        \mkern\@dotsep mu               % Whitespace after a dot
+      $}%
+      \hfill                            % Flush to the right
+      \nobreak\hb@xt@\@pnumwidth{%      % Chapter page’s number box
+        \hss #2%                        % Page number with buffer
+      }%
+      \par                              % Insert line skip
+      \penalty\@highpenalty             % Return to default penalty
+    \endgroup                           % End closed group
+  \fi
+}
+\makeatother
+
+
+
+\lstset{ % Set listing package options
+    language=bash, % choose the language of the code
+    basicstyle=\fontfamily{pcr}\selectfont\footnotesize\color{red},
+    keywordstyle=\color{black}\bfseries, % style for keywords
+    numbers=none, % where to put the line-numbers
+    numberstyle=\tiny, % the size of the fonts that are used for the line-numbers     
+    backgroundcolor=\color{white},
+    showspaces=false, % show spaces adding particular underscores
+    showstringspaces=false, % underline spaces within strings
+    showtabs=false, % show tabs within strings adding particular underscores
+    frame=single, % adds a frame around the code
+    tabsize=2, % sets default tabsize to 2 spaces
+    rulesepcolor=\color{gray},
+    rulecolor=\color{black},
+    captionpos=b, % sets the caption-position to bottom
+    breaklines=true, % sets automatic line breaking
+    breakatwhitespace=false, 
+}
+
+% SCRIPTS (python)
+
+% Load libraries
+\tcbuselibrary{minted,breakable,xparse,skins}
+\usepackage{minted}
+\usepackage{xcolor}
+
+\definecolor{bg}{gray}{0.95}
+\DeclareTCBListing{mintedbox}{O{}m!O{}}{%
+  breakable=true,
+  listing engine=minted,
+  listing only,
+  minted language=#2,
+  minted style=default,
+  minted options={%
+    linenos,
+    gobble=0,
+    breaklines=true,
+    breakafter=,,
+    fontsize=\small,
+    numbersep=8pt,
+    #1},
+  boxsep=0pt,
+  left skip=0pt,
+  right skip=0pt,
+  left=25pt,
+  right=0pt,
+  top=3pt,
+  bottom=3pt,
+  arc=5pt,
+  leftrule=0pt,
+  rightrule=0pt,
+  bottomrule=2pt,
+  toprule=2pt,
+  colback=bg,
+  colframe=gray!70,
+  enhanced,
+  overlay={%
+    \begin{tcbclipinterior}
+    \fill[gray!20!white] (frame.south west) rectangle ([xshift=20pt]frame.north west);
+    \end{tcbclipinterior}},
+  #3}

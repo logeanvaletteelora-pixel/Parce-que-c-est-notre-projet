@@ -1,0 +1,79 @@
+% Custom commands, Alexi GRACIAS 2026
+
+\lstset{aboveskip=\baselineskip,belowskip=\baselineskip,basicstyle=\ttfamily} % Formating line break after bash commands
+
+% Get rid of 0. chapter's number
+\makeatletter 
+\renewcommand{\thesection}{%
+  \ifnum\c@chapter<1 \@arabic\c@section
+  \else \thechapter.\@arabic\c@section
+  \fi
+}
+\makeatother
+
+% Rules for \bar{x} and \overline{x} commands
+\makeatletter
+\newcommand*{\Xbar}{}%
+\DeclareRobustCommand*{\Xbar}{%
+  \mathpalette\@Xbar{}%
+}
+
+% Theorems
+\tcbuselibrary{theorems} 
+\newtcbtheorem
+  []% init options
+  {Syntax}% name
+  {Syntax}% title
+  {%
+    colback=BrickRed!2,
+    colframe=BrickRed!35!BrickRed,
+    fonttitle=\bfseries,
+  }% options
+  {def}% prefix
+
+\tcbuselibrary{theorems} 
+\newtcbtheorem
+  []% init options
+  {Input}% name
+  {Input}% title
+  {%
+    colback=BlueViolet!5,
+    colframe=BlueViolet!35!BlueViolet,
+    fonttitle=\bfseries,
+  }% options
+  {def}% prefix
+
+\tcbuselibrary{theorems} 
+\newtcbtheorem
+  []% init options
+  {Output}% name
+  {Output}% title
+  {%
+    colback=Emerald!5,
+    colframe=Emerald!35!Emerald,
+    fonttitle=\bfseries,
+  }% options
+  {def}% prefix
+
+% Formulas
+\tcbset{highlight math style={enhanced,
+  colframe=red,colback=white,arc=0pt,boxrule=1pt}}
+
+% Other custom commands
+\newcommand*{\@Xbar}[2]{%
+  % #1: math style
+  % #2: unused (empty)
+  \sbox0{$#1\mathrm{X}\m@th$}%
+  \sbox2{$#1X\m@th$}%
+  \rlap{%
+    \hbox to\wd2{%
+      \hfill
+      $\overline{%
+        \vrule width 0pt height\ht0 %
+        \kern\wd0 %
+      }$
+    }
+  }
+  \copy2
+}
+\makeatother

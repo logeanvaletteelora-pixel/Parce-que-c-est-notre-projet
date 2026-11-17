@@ -1,0 +1,42 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from}\PYG{+w}{ }\PYG{n+nn}{tqdm}\PYG{n+nn}{.}\PYG{n+nn}{std}\PYG{+w}{ }\PYG{k+kn}{import} \PYG{n}{tqdm} \PYG{k}{as} \PYG{n}{tqdm\PYGZus{}base}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{logging}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{pandas}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{pd}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{seaborn}\PYG{+w}{ }\PYG{k}{as}\PYG{+w}{ }\PYG{n+nn}{sns}
+\PYG{k+kn}{import}\PYG{+w}{ }\PYG{n+nn}{torch}
+
+\PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{} Configuration Panel \PYGZhy{} version 1.2 Standalone \PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{} Last modification : october 2025             \PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{} Alexis Gracias                               \PYGZsh{}}
+\PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+
+\PYG{c+c1}{\PYGZsh{} Progress bars in for loop functions}
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{tqdm2}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}\PYG{p}{:}
+    \PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{setdefault}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{bar\PYGZus{}format}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}l\PYGZus{}bar\PYGZcb{}}\PYG{l+s+si}{\PYGZob{}bar\PYGZcb{}}\PYG{l+s+s2}{| }\PYG{l+s+si}{\PYGZob{}n\PYGZus{}fmt\PYGZcb{}}\PYG{l+s+s2}{/}\PYG{l+s+si}{\PYGZob{}total\PYGZus{}fmt\PYGZcb{}}\PYG{l+s+s2}{ • }\PYG{l+s+si}{\PYGZob{}elapsed\PYGZcb{}}\PYG{l+s+s2}{ • }\PYG{l+s+si}{\PYGZob{}rate\PYGZus{}fmt\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{setdefault}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{ncols}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+m+mi}{90}\PYG{p}{)}
+    \PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{setdefault}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{colour}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{green}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{kwargs}\PYG{o}{.}\PYG{n}{setdefault}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{dynamic\PYGZus{}ncols}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{k+kc}{False}\PYG{p}{)}
+    \PYG{k}{return} \PYG{n}{tqdm\PYGZus{}base}\PYG{p}{(}\PYG{o}{*}\PYG{n}{args}\PYG{p}{,} \PYG{o}{*}\PYG{o}{*}\PYG{n}{kwargs}\PYG{p}{)}
+    
+\PYG{c+c1}{\PYGZsh{} Main function}
+\PYG{k}{def}\PYG{+w}{ }\PYG{n+nf}{config}\PYG{p}{(}\PYG{p}{)}\PYG{p}{:}
+
+    \PYG{c+c1}{\PYGZsh{} \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} init \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{} \PYGZsh{}}
+    \PYG{c+c1}{\PYGZsh{} Logger init}
+    \PYG{n}{logging}\PYG{o}{.}\PYG{n}{basicConfig}\PYG{p}{(}\PYG{n}{level}\PYG{o}{=}\PYG{n}{logging}\PYG{o}{.}\PYG{n}{INFO}\PYG{p}{)}
+    \PYG{n}{logger} \PYG{o}{=} \PYG{n}{logging}\PYG{o}{.}\PYG{n}{getLogger}\PYG{p}{(}\PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}}\PYG{p}{)}
+    
+    \PYG{c+c1}{\PYGZsh{} GPU usage}
+    \PYG{n}{device} \PYG{o}{=} \PYG{n}{torch}\PYG{o}{.}\PYG{n}{device}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{cuda}\PYG{l+s+s2}{\PYGZdq{}} \PYG{k}{if} \PYG{n}{torch}\PYG{o}{.}\PYG{n}{cuda}\PYG{o}{.}\PYG{n}{is\PYGZus{}available}\PYG{p}{(}\PYG{p}{)} \PYG{k}{else} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{cpu}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Utilisation GPU}\PYG{l+s+s2}{\PYGZdq{}} \PYG{k}{if} \PYG{n}{device}\PYG{o}{.}\PYG{n}{type} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{cuda}\PYG{l+s+s2}{\PYGZdq{}} \PYG{k}{else} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Utilisation du CPU}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    
+    \PYG{c+c1}{\PYGZsh{} Aesthetic}
+    \PYG{n}{sns}\PYG{o}{.}\PYG{n}{set\PYGZus{}style}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{darkgrid}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{n}{tqdm\PYGZus{}base}\PYG{o}{.}\PYG{n}{pandas}\PYG{p}{(}
+        \PYG{n}{desc}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{Nettoyage}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} 
+        \PYG{n}{bar\PYGZus{}format}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}l\PYGZus{}bar\PYGZcb{}}\PYG{l+s+si}{\PYGZob{}bar\PYGZcb{}}\PYG{l+s+s2}{| }\PYG{l+s+si}{\PYGZob{}n\PYGZus{}fmt\PYGZcb{}}\PYG{l+s+s2}{/}\PYG{l+s+si}{\PYGZob{}total\PYGZus{}fmt\PYGZcb{}}\PYG{l+s+s2}{ • }\PYG{l+s+si}{\PYGZob{}elapsed\PYGZcb{}}\PYG{l+s+s2}{ • }\PYG{l+s+si}{\PYGZob{}rate\PYGZus{}fmt\PYGZcb{}}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,}
+        \PYG{n}{ncols}\PYG{o}{=}\PYG{l+m+mi}{90}\PYG{p}{,}
+        \PYG{n}{colour}\PYG{o}{=}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{green}\PYG{l+s+s2}{\PYGZdq{}}
+    \PYG{p}{)}
+\end{MintedVerbatim}
