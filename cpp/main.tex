@@ -1,0 +1,88 @@
+% main.tex, Alexis GRACIAS, 2026
+
+\documentclass[12pt, french]{report}
+
+\include{preamble/packages}
+\include{preamble/style}
+\include{preamble/commands}
+\include{preamble/unicode}
+
+%%%%%%%%%%%%%%% First page %%%%%%%%%%%%%%%
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\title{
+    \HRule \\[0.4cm] \Huge \bfseries 
+    Cheat sheet C++
+    \\[0.15cm] \HRule \\[0.4cm]
+    \Large 
+}
+
+% Author(s)
+\author[$\dagger$, *]{\textbf{\Large Elora Logean--Valette}} 
+\author[$\ddagger$, **]{\textbf{\Large Alexis Gracias}}
+
+\affil[$\dagger$]{\normalsize CentraleSupélec, Metz, France}
+\affil[$\dagger$, $\ddagger$]{\normalsize LORIA, Nancy, France}
+
+\affil[*]{\small \texttt{elora.logean--valette@student-cs.fr}}
+\affil[**]{\small \texttt{alexis.gracias@centralesupelec.fr}}
+
+\interfootnotelinepenalty=10000 % Footnote options
+
+%%%%%%%%%%%%%%% Front matter %%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Init                                   % 1. First page
+\pagenumbering{roman}
+\maketitle
+\dominitoc
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} % Headers and footers
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[RO,LE]{\leftmark}
+\fancyhead[LO,LE]{E. Logean--Valette, A. Gracias}
+\fancyfoot{} % clear all footer fields
+\makeatletter
+\fancyfoot[C]{\thepage} % Page number
+\renewcommand{\@oddfoot}{\@evenfoot}
+\makeatother
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{---}
+\renewcommand{\labelitemiii}{-}
+\renewcommand{\labelitemiv}{.}
+
+%\include{frontmatter/abstract}             % 2. Abstract / resume
+%\include{frontmatter/acknowledgements}     % 3. Acknowledgements
+\large \tableofcontents                    % 4. ToC
+\normalsize
+%\include{listoffigures}                    % 5. List of figures / equations
+%\include{listofequations}                  
+%\include{frontmatter/nomenclature}         % 6. Nomenclature
+%\include{frontmatter/glossary}             % 7. Glossary
+
+%%%%%%%%%%%%%%% Main matter %%%%%%%%%%%%%%%
+
+\cleardoublepage
+\pagenumbering{arabic}
+\makeatletter
+\renewcommand{\@evenfoot}{\makebox[\textwidth][c]{page {\thepage} sur \pageref{LastPage}}}
+\makeatother
+
+\input{_chapters_include.tex} % Automatic chapter inclusion
+
+%%%%%%%%%%%%%%% Back page %%%%%%%%%%%%%%%
+
+%\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{chapter}{Bibliographie} 
+%\bibliographystyle{plain} 
+%\bibliography{referencies}
+%\include{annexes}
+
+%%%%%%%%%%%%%%% Fourth page %%%%%%%%%%%%%%%
+
+% Run ./build.sh with executable rights
+
+\end{document}
